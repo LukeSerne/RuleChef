@@ -120,7 +120,7 @@ class Emitter:
     def _emit_create_const(self, constant: tokens.TOK_NUMBER | tokens.TOK_BINARY_OPERATION, parent_op_name: str, input_number: int):
         const_varnode_name = self._get_free_name("out_const")
         out  = f"  Varnode* {const_varnode_name} = data.newConstant({constant.size_to_c()}, {constant.to_c()});\n"
-        out += f"  data.opSetInput(op, {const_varnode_name}, {input_number});\n"
+        out += f"  data.opSetInput({parent_op_name}, {const_varnode_name}, {input_number});\n"
         return out
 
     def _emit_declare_var(self, variable: tokens.TOK_VAR) -> str:

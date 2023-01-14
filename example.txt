@@ -1,0 +1,5 @@
+SignBitExtract:
+    INT_RIGHT(x, |x| * 8 - 1) :- {
+        x = INT_OR(y, INT_MULT(y, -1:|y|))
+    }
+    => INT_ZEXT(INT_NOTEQUAL(y, 0:|y|))

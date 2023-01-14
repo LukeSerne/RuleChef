@@ -124,8 +124,13 @@ class Emitter:
         return out
 
     def _emit_declare_var(self, variable: tokens.TOK_VAR) -> str:
-        self._declared_vars.add(variable.to_c())
-        return f"  Varnode* {variable.to_c()};\n"
+        var_name = variable.to_c()
+
+        if var_name in self._declared_vars:
+            return ""
+
+        self._declared_vars.add(var_name)
+        return f"  Varnode* {var_name};\n"
 
     def _emit_create_varnode(self, var_name: str, var_source: str, num_indent: int) -> str:
         if var_name not in self._declared_vars:

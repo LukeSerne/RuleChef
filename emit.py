@@ -75,7 +75,7 @@ class Emitter:
             elif isinstance(replace_arg, tokens.TOK_VAR):
                 out += self._emit_create_var(replace_arg, "op", i)
             else:
-                out += self._emit_create_const(replace_arg,- "op", i)
+                out += self._emit_create_const(replace_arg, "op", i)
 
         out += (
             "\n"

@@ -155,7 +155,7 @@ class TOK_BINARY_OPERATION(Token):
     def to_pretty(self) -> str:
         # TODO: The token used for this operation in C might not be the same as
         # the token used for this operation in the rule specification grammar.
-        return f"{self._left.to_pretty()} {self._c_token} {self._right.to_pretty()})"
+        return f"({self._left.to_pretty()} {self._c_token} {self._right.to_pretty()})"
 
     def get_variables(self):
         yield from self._left.get_variables()

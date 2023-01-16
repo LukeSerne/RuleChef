@@ -106,7 +106,7 @@ class TOK_NUMBER(Token):
             self._size_val = None
 
     def __repr__(self) -> str:
-        return f"INT({self._val_repr}, {self._size!r})"
+        return f"NUMBER({self._val_repr}, {self._size!r})"
 
     def to_c(self) -> str:
         return self._val_repr

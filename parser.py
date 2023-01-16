@@ -49,7 +49,7 @@ def get_grammar():
     expr = pp.Forward()
 
     # An opcode with expressions as arguments (such as 'INT_RIGHT(x, |y| + 4)')
-    opcode_expr = opcode + "(" + pp.delimited_list(expr) + ")"
+    opcode_expr = opcode + pp.Suppress("(") + pp.delimited_list(expr) + pp.Suppress(")")
 
     # Multiple opcode expressions that are alternatives (such as 'INT_RIGHT(y) | y')
     opcode_alt_expr = opcode_expr + (pp.Suppress("|") + pp.Or((variable, opcode_expr)))[...]
@@ -85,7 +85,7 @@ def get_grammar():
 
     @opcode_expr.set_parse_action
     def parse_opcode(results: pp.ParseResults):
-        return tokens.TOK_OPCODE(results[0], results[2:-1])
+        return tokens.TOK_OPCODE(results[0], results[1:])
 
     def parse_value_expr(results: pp.ParseResults):
         if isinstance(results, int):
@@ -146,7 +146,7 @@ def parse_description(file_name: str) -> rule.Rule:
     parsed_tokens = grammar.parse_file(file_name)
 
     # TODO: Figure out why this is needed...
-    parsed_tokens['match_expr'] = tokens.TOK_OPCODE(parsed_tokens['match_expr'][0], parsed_tokens['match_expr'][2:-1])
+    parsed_tokens['match_expr'] = tokens.TOK_OPCODE(parsed_tokens['match_expr'][0], parsed_tokens['match_expr'][1:])
 
     return rule.Rule(
         parsed_tokens['rule_name'],
